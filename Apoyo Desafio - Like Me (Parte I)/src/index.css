@@ -99,3 +99,36 @@ h1 {
 .post-content button:hover {
   background-color: #ee5a5a;
 }
+
+/* Parte II: botones para likes y eliminación */
+.post-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.post-actions .like-button {
+  background-color: #ff6b6b;
+}
+.post-actions .delete-button {
+  background-color: #505968;
+}
+.post-actions .delete-button:hover {
+  background-color: #333b48;
+}
+.post-actions button:disabled,
+.form button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+.error {
+  background-color: #ffe4e4;
+  color: #892020;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+.estado {
+  text-align: center;
+  color: #555;
+  padding: 20px;
+}
