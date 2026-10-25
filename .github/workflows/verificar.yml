@@ -1,0 +1,49 @@
+name: Verificar Like Me - Parte II
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probar:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: likeme
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d likeme"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DB_HOST: localhost
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_DATABASE: likeme
+      TEST_DATABASE: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Instalar dependencias del servidor
+        run: npm install --no-audit --no-fund
+      - name: Probar API con PostgreSQL real
+        run: npm test
+      - name: Instalar dependencias de React
+        working-directory: Apoyo Desafio - Like Me (Parte I)
+        run: npm install --no-audit --no-fund
+      - name: Compilar aplicación React
+        working-directory: Apoyo Desafio - Like Me (Parte I)
+        run: npm run build
