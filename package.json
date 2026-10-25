@@ -1,13 +1,13 @@
 {
   "name": "likeme-server",
-  "version": "1.0.0",
-  "description": "Servidor Express para la red social Like Me",
+  "version": "2.0.0",
+  "description": "Servidor Express de Like Me (Partes I y II)",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "node --watch index.js"
+    "dev": "node --watch index.js",
+    "test": "node --test"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {

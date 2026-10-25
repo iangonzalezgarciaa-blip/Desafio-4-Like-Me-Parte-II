@@ -1,16 +1,14 @@
-# Checklist de entrega - Like Me (Parte I)
+# Checklist de entrega - Parte II
 
-## Requerimientos
+- [x] Agregué PUT /posts/:id que actualiza los likes con PostgreSQL.
+- [x] Agregué DELETE /posts/:id que elimina un post de PostgreSQL.
+- [x] Incorporé try/catch en las consultas con pg.
+- [x] Conecté los botones del cliente React con PUT y DELETE.
+- [x] Conservé GET /posts y POST /posts de Parte I.
+- [x] Actualicé README como changelog en primera persona.
 
-- [ ] CORS habilitado con el paquete `cors` (2 pts) - `app.use(cors())` en `index.js`
-- [ ] Conexión a PostgreSQL con el paquete `pg` (2 pts) - `Pool` configurado con variables de entorno
-- [ ] Ruta GET `/posts` que devuelve los registros de la tabla `posts` (3 pts)
-- [ ] Ruta POST `/posts` que recibe y guarda un nuevo registro (3 pts)
-
-## Antes de entregar
-
-- [ ] Base `likeme` y tabla `posts` creadas con `setup.sql`
-- [ ] `.env` creado a partir de `.env.example`
-- [ ] `npm start` muestra "Servidor encendido en http://localhost:3000"
-- [ ] El cliente React lista los posts y el formulario agrega uno nuevo
-- [ ] Comprimir la carpeta sin `node_modules` (ni la del servidor ni la del cliente) y sin `.env`
+## Verificación local pendiente
+- [ ] Crear o iniciar PostgreSQL con la base likeme.
+- [ ] Configurar .env con credenciales locales.
+- [ ] Ejecutar npm install y npm test.
+- [ ] Iniciar la API y React y probar un like y una eliminación reales.

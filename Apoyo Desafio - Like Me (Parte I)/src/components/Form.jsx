@@ -4,42 +4,30 @@ function Form({ onAddPost }) {
   const [titulo, setTitulo] = useState('');
   const [img, setImg] = useState('');
   const [descripcion, setDescripcion] = useState('');
+  const [guardando, setGuardando] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (titulo && img && descripcion) {
-      onAddPost({ titulo, img, descripcion, likes: 0 });
-      setTitulo('');
-      setImg('');
-      setDescripcion('');
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (guardando || !titulo.trim() || !img.trim() || !descripcion.trim()) return;
+    setGuardando(true);
+    try {
+      const guardado = await onAddPost({ titulo: titulo.trim(), img: img.trim(), descripcion: descripcion.trim() });
+      if (guardado) { setTitulo(''); setImg(''); setDescripcion(''); }
+    } finally {
+      setGuardando(false);
     }
   };
 
   return (
     <form className="form" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Título"
-        maxLength={25}
-        value={titulo}
-        onChange={(e) => setTitulo(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="URL de la imagen"
-        maxLength={1000}
-        value={img}
-        onChange={(e) => setImg(e.target.value)}
-      />
-      <textarea
-        placeholder="Descripción"
-        maxLength={255}
-        value={descripcion}
-        onChange={(e) => setDescripcion(e.target.value)}
-      />
-      <button type="submit">Agregar Post</button>
+      <input type="text" aria-label="Título" placeholder="Título" maxLength={25} required
+        value={titulo} onChange={(event) => setTitulo(event.target.value)} />
+      <input type="url" aria-label="URL de la imagen" placeholder="URL de la imagen" maxLength={1000} required
+        value={img} onChange={(event) => setImg(event.target.value)} />
+      <textarea aria-label="Descripción" placeholder="Descripción" maxLength={255} required
+        value={descripcion} onChange={(event) => setDescripcion(event.target.value)} />
+      <button type="submit" disabled={guardando}>{guardando ? 'Agregando...' : 'Agregar Post'}</button>
     </form>
   );
 }
-
 export default Form;

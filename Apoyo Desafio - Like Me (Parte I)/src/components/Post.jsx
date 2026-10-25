@@ -1,29 +1,26 @@
 import { useState } from 'react';
-import axios from 'axios';
 
-function Post({ post }) {
-  const [likes, setLikes] = useState(post.likes);
-
-  const handleLike = async () => {
-    try {
-      const updatedPost = { ...post, likes: likes + 1 };
-      const response = await axios.put(`http://localhost:3000/posts/${post.id}`, updatedPost);
-      setLikes(response.data.likes);
-    } catch (error) {
-      console.error('Error al dar like:', error);
-    }
+function Post({ post, onLike, onDelete }) {
+  const [procesando, setProcesando] = useState(false);
+  const ejecutar = async (accion) => {
+    if (procesando) return;
+    setProcesando(true);
+    try { await accion(post.id); } finally { setProcesando(false); }
   };
-
   return (
-    <div className="post">
+    <article className="post">
       <img src={post.img} alt={post.titulo} />
       <div className="post-content">
         <h2>{post.titulo}</h2>
         <p>{post.descripcion}</p>
-        <button onClick={handleLike}>❤️ {likes}</button>
+        <div className="post-actions">
+          <button className="like-button" type="button" aria-label={`Dar like a ${post.titulo}`}
+            disabled={procesando} onClick={() => ejecutar(onLike)}>❤️ {post.likes ?? 0}</button>
+          <button className="delete-button" type="button" aria-label={`Eliminar ${post.titulo}`}
+            disabled={procesando} onClick={() => ejecutar(onDelete)}>✕ Eliminar</button>
+        </div>
       </div>
-    </div>
+    </article>
   );
 }
-
 export default Post;
